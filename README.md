@@ -10,8 +10,8 @@
 ```xml
 
         <dependency>
-            <groupId>com.multiple.frame</groupId>
-            <artifactId>multiple-swak</artifactId>
+            <groupId>com.ocean.swak</groupId>
+            <artifactId>ocean-swak</artifactId>
         </dependency>
 
 ```

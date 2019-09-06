@@ -39,5 +39,17 @@ public class TagTest extends AbstractTest {
         titleBiz.getTitle("xxxxx", null);
     }
 
+    /**
+     * 添加一个 activity 的活动，要在 dc业务上调用的时候 先调用activity
+     * 有 --> 返回
+     * 无 ---> 再调用dc
+     */
+    @Test
+    public void tagFirst() {
+
+        SwakContext swakContext = new SwakContext("activit", "dc");
+        titleBiz.getTitle("xxxx", swakContext);
+    }
+
 
 }

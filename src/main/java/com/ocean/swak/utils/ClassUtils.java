@@ -34,6 +34,15 @@ public class ClassUtils extends org.springframework.util.ClassUtils {
 
     }
 
+    public static String getQualifiedNameByAnnotation(Class inClass, Class annotationClass) {
+        Optional<Class<?>> optional = getInterfaceClassByAnnotation(inClass, annotationClass);
+        if (!optional.isPresent()) {
+            return null;
+        }
+        return getQualifiedName(optional.get());
+    }
+
+
     public static boolean isOriginMethod(Method method) {
 
         return ReflectionUtils.isHashCodeMethod(method)

@@ -25,7 +25,7 @@ public interface SwakRegister {
     void register(MethodExecuteInfo executeInfo);
 
 
-    InterfaceExecuteInfo lookUp(InterfaceExecuteInfo executeInfo);
+    InterfaceExecuteInfo lookUp(String key);
 
     /**
      * 查询

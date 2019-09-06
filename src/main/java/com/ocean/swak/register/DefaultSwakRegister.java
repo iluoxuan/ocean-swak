@@ -7,7 +7,6 @@ import com.ocean.swak.entity.InterfaceExecuteInfo;
 import com.ocean.swak.entity.MethodExecuteInfo;
 import com.ocean.swak.entity.SwakContext;
 import com.ocean.swak.utils.ClassUtils;
-import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Map;
@@ -50,9 +49,16 @@ public class DefaultSwakRegister implements SwakRegister {
         }
 
         String interfaceName = ClassUtils.getQualifiedName(optional.get());
-        String key = String.format(DEFAULT_FORMAT, interfaceName, executeInfo.getBizCode(), executeInfo.getTags().get(0));
 
-        interfaceExecuteCache.put(key, executeInfo);
+        // 注入 每个标签
+        executeInfo.getTags().stream().forEach(tag -> {
+
+            String key = String.format(DEFAULT_FORMAT, interfaceName, executeInfo.getBizCode(), tag);
+
+            interfaceExecuteCache.put(key, executeInfo);
+        });
+
+
     }
 
     @Override
@@ -66,16 +72,13 @@ public class DefaultSwakRegister implements SwakRegister {
     }
 
     @Override
-    public InterfaceExecuteInfo lookUp(InterfaceExecuteInfo selectInfo) {
-
-        Optional<Class<?>> optional = ClassUtils.getInterfaceClassByAnnotation(
-                selectInfo.getTarget().getClass(), SwakInterface.class);
-        Assert.isTrue(optional.isPresent(), "no find @SwakInterface class");
-
-        String interfaceName = ClassUtils.getQualifiedName(optional.get());
-        String key = String.format(DEFAULT_FORMAT, interfaceName, selectInfo.getBizCode(), selectInfo.getTags().get(0));
+    public InterfaceExecuteInfo lookUp(String key) {
 
         return interfaceExecuteCache.get(key);
+    }
+
+    public static String getInterfaceCacheKey(String interfaceName, String bizCode, String tag) {
+        return String.format(DEFAULT_FORMAT, interfaceName, bizCode, tag);
     }
 
     @Override

@@ -2,11 +2,8 @@ package com.ocean.swak.advice;
 
 
 import com.ocean.swak.annotation.SwakBiz;
-import com.ocean.swak.entity.ExecuteType;
-import com.ocean.swak.entity.InterfaceExecuteInfo;
-import com.ocean.swak.entity.SwakContext;
-import com.ocean.swak.entity.SwakLocal;
-import com.ocean.swak.register.SwakRegister;
+import com.ocean.swak.entity.*;
+import com.ocean.swak.route.rule.LookUpRuleComposite;
 import com.ocean.swak.utils.ClassUtils;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,8 +39,9 @@ import java.util.Optional;
 @Aspect
 public class SwakInterfaceAop {
 
+
     @Autowired
-    private SwakRegister swakRegister;
+    private LookUpRuleComposite lookUpRuleComposite;
 
     /**
      * 拦截类上的 注解用 @within
@@ -113,12 +111,12 @@ public class SwakInterfaceAop {
     private Object interfaceInvoke(ProceedingJoinPoint joinPoint, Method method, SwakContext swakContext) throws Throwable {
 
 
-        InterfaceExecuteInfo selectInfo = new InterfaceExecuteInfo();
-        BeanUtils.copyProperties(swakContext, selectInfo);
-        selectInfo.setTarget(joinPoint.getTarget());
-
         // 寻找的目标执行信息
-        InterfaceExecuteInfo executeInfo = swakRegister.lookUp(selectInfo);
+        LookUpParam lookUpParam = new LookUpParam();
+        BeanUtils.copyProperties(swakContext, lookUpParam);
+        lookUpParam.setTarget(joinPoint.getTarget());
+
+        InterfaceExecuteInfo executeInfo = lookUpRuleComposite.lookUp(lookUpParam);
         Assert.notNull(executeInfo, "no find interface execute info");
 
         // 获取真实对象

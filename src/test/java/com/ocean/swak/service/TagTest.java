@@ -2,6 +2,7 @@ package com.ocean.swak.service;
 
 import com.ocean.swak.AbstractTest;
 import com.ocean.swak.entity.SwakContext;
+import com.ocean.swak.entity.SwakLocal;
 import com.ocean.swak.tag.TitleBiz;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,17 @@ public class TagTest extends AbstractTest {
         SwakContext swakContext = new SwakContext("dc");
         titleBiz.getTitle("xxxx", swakContext);
 
+    }
+
+
+    /**
+     * 测试通过 SwakLocal
+     */
+    @Test
+    public void tagByLocal() {
+
+        SwakLocal.getCurrent().setContext(new SwakContext("maiwei"));
+        titleBiz.getTitle("xxxxx", null);
     }
 
 

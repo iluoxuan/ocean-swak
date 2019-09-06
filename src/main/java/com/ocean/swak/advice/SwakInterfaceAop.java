@@ -159,7 +159,7 @@ public class SwakInterfaceAop {
             return null;
         }
 
-        Optional<SwakContext> optional = Arrays.stream(args).filter(object -> object.getClass()
+        Optional<SwakContext> optional = Arrays.stream(args).filter(Objects::nonNull).filter(object -> object.getClass()
                 .isAssignableFrom(SwakContext.class)).map(object -> (SwakContext) object).findFirst();
         if (!optional.isPresent()) {
             return null;

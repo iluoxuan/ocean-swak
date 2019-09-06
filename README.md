@@ -126,6 +126,24 @@ public class HejService {
 * 命中 输入[tag1, tag2] ，tag1-->有，否 tag2 【优先级配置由调用方配置】
 * 
 
+## 支持rpc调用
+### 场景
+* A 业务是主干业务抽离的，然后需要 远程服务的方式给主干应用提供服务
+* 接口即是主干业务的提供的扩展
+* 主干应用开发人员来说，应该提供单个接口以支持所有业务类型
+* 怎么定义Do
+```java
+
+ public class ItemDo{
+    
+    private String type;
+    private Integer status;
+    private Map<String, Object> bizMap;
+    
+ }
+
+```
+
 
 
 

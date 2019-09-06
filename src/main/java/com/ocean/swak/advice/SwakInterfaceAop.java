@@ -116,7 +116,7 @@ public class SwakInterfaceAop {
         BeanUtils.copyProperties(swakContext, lookUpParam);
         lookUpParam.setTarget(joinPoint.getTarget());
 
-        InterfaceExecuteInfo executeInfo = lookUpRuleComposite.lookUp(lookUpParam);
+        MethodExecuteInfo executeInfo = lookUpRuleComposite.lookUp(lookUpParam);
         Assert.notNull(executeInfo, "no find interface execute info");
 
         // 获取真实对象

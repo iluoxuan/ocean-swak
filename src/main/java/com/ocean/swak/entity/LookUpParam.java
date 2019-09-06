@@ -3,6 +3,7 @@ package com.ocean.swak.entity;
 import com.ocean.swak.route.rule.LookUpType;
 import lombok.Data;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -23,6 +24,8 @@ public class LookUpParam {
     private String bizCode;
 
     private Object target;
+
+    private Method method;
 
     /**
      * 默认策略

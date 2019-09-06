@@ -10,4 +10,7 @@ public interface SwakConstants {
 
     String swakContext = "SwakContext-%s";
 
+    String registerCacheKeyFormat = "%s-%s-%s";
+
+
 }

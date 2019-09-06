@@ -1,7 +1,7 @@
 package com.ocean.swak.route.rule;
 
-import com.ocean.swak.entity.InterfaceExecuteInfo;
 import com.ocean.swak.entity.LookUpParam;
+import com.ocean.swak.entity.MethodExecuteInfo;
 
 /**
  * 查找规则
@@ -17,7 +17,7 @@ public interface LookUpRule {
      * @param param
      * @return
      */
-    InterfaceExecuteInfo lookUp(LookUpParam param);
+    MethodExecuteInfo lookUp(LookUpParam param);
 
 
 }

@@ -2,7 +2,6 @@ package com.ocean.swak.executor;
 
 import com.ocean.swak.annotation.SwakBiz;
 import com.ocean.swak.annotation.SwakInterface;
-import com.ocean.swak.entity.InterfaceExecuteInfo;
 import com.ocean.swak.entity.MethodExecuteInfo;
 import com.ocean.swak.register.SwakRegister;
 import com.ocean.swak.utils.ClassUtils;
@@ -46,7 +45,7 @@ public class SwakInit {
             Object bean = entry.getValue();
             SwakBiz swakBiz = AnnotationUtils.findAnnotation(bean.getClass(), SwakBiz.class);
 
-            InterfaceExecuteInfo executeInfo = new InterfaceExecuteInfo();
+            MethodExecuteInfo executeInfo = new MethodExecuteInfo();
             executeInfo.setTags(Lists.newArrayList(swakBiz.tags()));
             executeInfo.setTarget(bean);
             executeInfo.setBizCode(swakBiz.bizCode());
@@ -63,8 +62,6 @@ public class SwakInit {
                 MethodExecuteInfo methodExecuteInfo = new MethodExecuteInfo();
                 BeanUtils.copyProperties(executeInfo, methodExecuteInfo);
                 methodExecuteInfo.setMethod(method);
-                methodExecuteInfo.setTarget(bean);
-
                 swakRegister.register(methodExecuteInfo);
 
             });

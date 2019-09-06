@@ -2,15 +2,14 @@ package com.ocean.swak.register;
 
 import com.google.common.collect.Maps;
 import com.ocean.swak.annotation.SwakInterface;
-import com.ocean.swak.config.SwakConstants;
-import com.ocean.swak.entity.InterfaceExecuteInfo;
 import com.ocean.swak.entity.MethodExecuteInfo;
-import com.ocean.swak.entity.SwakContext;
 import com.ocean.swak.utils.ClassUtils;
-import org.springframework.util.CollectionUtils;
+import com.ocean.swak.utils.SwakUtils;
+import org.springframework.util.StringUtils;
 
+import java.lang.reflect.Method;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Objects;
 
 /**
  * 要支持两种 调用方式
@@ -23,75 +22,54 @@ import java.util.Optional;
  */
 public class DefaultSwakRegister implements SwakRegister {
 
-    private final static String DEFAULT_FORMAT = "%s-%s-%s";
 
     /**
      * 缓存接口调用
      * channel-tag-interface
      */
-    private final static Map<String, InterfaceExecuteInfo> interfaceExecuteCache = Maps.newHashMap();
+    private final static Map<String, MethodExecuteInfo> interfaceExecuteCache = Maps.newHashMap();
 
     /**
      * 缓存更多的信息
      * <p>
-     * channel-tag-method [按方法名称调用]
+     * channel-tag-interface#method [按方法名称调用]
      */
     private final static Map<String, MethodExecuteInfo> methodExecuteCache = Maps.newHashMap();
 
 
     @Override
-    public void register(InterfaceExecuteInfo executeInfo) {
+    public void register(MethodExecuteInfo executeInfo) {
 
-        Optional<Class<?>> optional = ClassUtils.getInterfaceClassByAnnotation(
-                executeInfo.getTarget().getClass(), SwakInterface.class);
-        if (!optional.isPresent()) {
+
+        String interfaceName = ClassUtils.getQualifiedNameByAnnotation(executeInfo.getTarget().getClass(),
+                SwakInterface.class);
+        if (!StringUtils.hasText(interfaceName)) {
             return;
         }
-
-        String interfaceName = ClassUtils.getQualifiedName(optional.get());
 
         // 注入 每个标签
         executeInfo.getTags().stream().forEach(tag -> {
 
-            String key = String.format(DEFAULT_FORMAT, interfaceName, executeInfo.getBizCode(), tag);
+            Method method = executeInfo.getMethod();
+            String key = SwakUtils.getCacheKey(method, interfaceName, executeInfo.getBizCode(), tag);
 
-            interfaceExecuteCache.put(key, executeInfo);
+            if (Objects.isNull(method)) {
+                interfaceExecuteCache.put(key, executeInfo);
+            } else {
+                methodExecuteCache.put(key, executeInfo);
+            }
+
         });
 
-
     }
 
-    @Override
-    public void register(MethodExecuteInfo executeInfo) {
-
-
-        String key = String.format(DEFAULT_FORMAT, executeInfo.getBizCode(),
-                executeInfo.getTags().get(0), executeInfo.getMethod().getName());
-
-        methodExecuteCache.put(key, executeInfo);
-    }
 
     @Override
-    public InterfaceExecuteInfo lookUp(String key) {
+    public MethodExecuteInfo lookUp(String key) {
 
         return interfaceExecuteCache.get(key);
     }
 
-    public static String getInterfaceCacheKey(String interfaceName, String bizCode, String tag) {
-        return String.format(DEFAULT_FORMAT, interfaceName, bizCode, tag);
-    }
-
-    @Override
-    public MethodExecuteInfo lookMethod(SwakContext swakContext, String methodName) {
-
-        String tag = CollectionUtils.isEmpty(swakContext.getTags()) ? SwakConstants.swakDefaultBiz :
-                swakContext.getTags().get(0);
-
-        String key = String.format(DEFAULT_FORMAT, swakContext.getBizCode(),
-                tag, methodName);
-
-        return methodExecuteCache.get(key);
-    }
 
     @Override
     public void clear() {

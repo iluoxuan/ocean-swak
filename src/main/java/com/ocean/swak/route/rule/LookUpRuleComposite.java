@@ -1,7 +1,7 @@
 package com.ocean.swak.route.rule;
 
-import com.ocean.swak.entity.InterfaceExecuteInfo;
 import com.ocean.swak.entity.LookUpParam;
+import com.ocean.swak.entity.MethodExecuteInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +18,7 @@ public class LookUpRuleComposite {
     private List<LookUpRule> lookUpRules;
 
 
-    public InterfaceExecuteInfo lookUp(LookUpParam param) {
+    public MethodExecuteInfo lookUp(LookUpParam param) {
 
         for (LookUpRule lookUpRule : lookUpRules) {
             if (lookUpRule.support(param)) {

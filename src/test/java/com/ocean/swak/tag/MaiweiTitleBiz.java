@@ -11,7 +11,7 @@ import com.ocean.swak.entity.SwakContext;
 public class MaiweiTitleBiz implements TitleBiz {
 
     @Override
-    public String getTitle(String param, SwakContext swakContext) {
+    public String getSuperHero(String param, SwakContext swakContext) {
 
         System.out.println("--- mai wei");
 

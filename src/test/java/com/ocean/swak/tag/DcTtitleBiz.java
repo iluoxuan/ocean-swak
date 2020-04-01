@@ -11,10 +11,20 @@ import com.ocean.swak.entity.SwakContext;
 public class DcTtitleBiz implements TitleBiz {
 
     @Override
-    public String getTitle(String param, SwakContext swakContext) {
+    public String getSuperHero(String param, SwakContext swakContext) {
 
         System.out.println("--- in dc ----");
 
+        // TODO 模拟远程调用
+        rpcGet();
+
         return "dc";
+    }
+
+    private void rpcGet() {
+
+        System.out.println(" --- in rpc ---");
+
+        throw new RuntimeException("rpc excetion");
     }
 }

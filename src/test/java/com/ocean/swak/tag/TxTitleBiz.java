@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Primary;
 public class TxTitleBiz implements TitleBiz {
 
     @Override
-    public String getTitle(String param, SwakContext swakContext) {
+    public String getSuperHero(String param, SwakContext swakContext) {
 
         System.out.println("--- tx ----");
 

@@ -1,6 +1,7 @@
 package com.ocean.swak.tag;
 
 import com.ocean.swak.annotation.SwakInterface;
+import com.ocean.swak.annotation.SwakRule;
 import com.ocean.swak.entity.SwakContext;
 
 /**
@@ -10,5 +11,6 @@ import com.ocean.swak.entity.SwakContext;
 @SwakInterface(desc = "获取标题")
 public interface TitleBiz {
 
-    String getTitle(String param, SwakContext swakContext);
+    @SwakRule
+    String getSuperHero(String param, SwakContext swakContext);
 }

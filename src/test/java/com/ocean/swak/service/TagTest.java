@@ -24,7 +24,11 @@ public class TagTest extends AbstractTest {
     public void tagInterface() {
 
         SwakContext swakContext = new SwakContext("dc");
-        titleBiz.getTitle("xxxx", swakContext);
+        titleBiz.getSuperHero("xxxx", swakContext);
+
+        // 中间有远程调用这么办
+
+        // 但是我有一个这样的方法。dc中没有找到 我要去漫威中去找 【有一个查找的规则】
 
     }
 
@@ -36,7 +40,7 @@ public class TagTest extends AbstractTest {
     public void tagByLocal() {
 
         SwakLocal.getCurrent().setContext(new SwakContext("maiwei"));
-        titleBiz.getTitle("xxxxx", null);
+        titleBiz.getSuperHero("xxxxx", null);
     }
 
     /**
@@ -48,7 +52,7 @@ public class TagTest extends AbstractTest {
     public void tagFirst() {
 
         SwakContext swakContext = new SwakContext("activit", "dc");
-        titleBiz.getTitle("xxxx", swakContext);
+        titleBiz.getSuperHero("xxxx", swakContext);
     }
 
 

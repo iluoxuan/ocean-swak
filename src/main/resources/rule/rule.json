@@ -1,0 +1,21 @@
+{
+
+
+  "com.ocean.swak.tag.TitleBiz": [
+    {
+
+      "method": "getSuperHero",
+      "desc": "找到超能力者",
+
+      "merge": {
+        "tagSeq": "dc, mainwen",
+        "res": "union/first"
+      },
+
+      "order": "dc,maiwen",
+      "skip": "dc"
+    }
+  ]
+
+
+}

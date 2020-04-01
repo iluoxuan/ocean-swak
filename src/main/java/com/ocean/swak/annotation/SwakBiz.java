@@ -30,4 +30,29 @@ public @interface SwakBiz {
      * @return
      */
     String[] tags() default {SwakConstants.swakDefaultBiz};
+
+    /**
+     * 失败了 跳过
+     * @return
+     */
+    boolean skip() default false;
+
+    /**
+     * 和某个tag 同时执行
+     * @return
+     */
+    String[] merge() default "";
+
+    /**
+     * 和那几个表情产生冲突
+     * @return
+     */
+    String[] conflict() default "";
+
+    /**
+     * 顺序
+     * @return
+     */
+    int order() default 0;
+
 }
